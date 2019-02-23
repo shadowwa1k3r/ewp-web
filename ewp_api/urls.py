@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import ListCouncilView, LoginView, RegisterUsersView
+from . import views
 
 urlpatterns = [
-    path('auth/login/', LoginView.as_view(), name='auth-login'),
-    path('auth/register/', RegisterUsersView.as_view(), name='auth-register'),
-    path('council/list/', ListCouncilView.as_view(), name="council-all")
+    path('auth/login/', views.LoginView.as_view(), name='auth-login'),
+    path('council/list/', views.ListCouncilView.as_view(), name='council-all'),
+    path('feedback/create/', views.FeedbackCreateView.as_view(), name='feedback-create')
 ]
