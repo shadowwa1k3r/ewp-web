@@ -92,7 +92,9 @@ DATABASES = {
         # 'PASSWORD': '12345'
         'NAME': 'd5g123t3inot9u',
         'USER': 'ktcafzgvklhwwt',
-        'PASSWORD': 'b7dc307affa9d9d29daefa2a93f7b1c44eadfa1db6322aeb5a18de77bd3b6ac1'
+        'PASSWORD': 'b7dc307affa9d9d29daefa2a93f7b1c44eadfa1db6322aeb5a18de77bd3b6ac1',
+        'HOST': 'ec2-46-137-121-216.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
