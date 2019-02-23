@@ -1,1 +1,1 @@
-EWP control panel
+EWP control panel in django
