@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('control-panel/', include('ewp_control_panel.urls')),
+    path('', include('ewp_control_panel.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include('ewp_api.urls'))
 ]
