@@ -87,9 +87,12 @@ WSGI_APPLICATION = 'ewpadmin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ewp',
-        'USER': 'djangouser',
-        'PASSWORD': '12345'
+        # 'NAME': 'ewp',
+        # 'USER': 'djangouser',
+        # 'PASSWORD': '12345'
+        'NAME': 'd5g123t3inot9u',
+        'USER': 'ktcafzgvklhwwt',
+        'PASSWORD': 'b7dc307affa9d9d29daefa2a93f7b1c44eadfa1db6322aeb5a18de77bd3b6ac1'
     }
 }
 
