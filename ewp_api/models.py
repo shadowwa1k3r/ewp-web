@@ -51,13 +51,10 @@ class Feedback(models.Model):
 
 
 class Aviarace(models.Model):
-    code = models.CharField(max_length=25, default='')
+    code = models.IntegerField()
     city = models.CharField(max_length=255, default='')
     address = models.CharField(max_length=255, default='')
     geolocation = models.CharField(max_length=255, default='')
-
-    class Meta:
-        db_table = 'aviarace'
 
     def __str__(self):
         return self.city
