@@ -467,7 +467,7 @@ canvas {
   .order-table tr th {
     background: #e8e9ef; }
   .order-table tr td:last-child, .order-table tr th:last-child {
-    text-align: right; }
+     }
   .order-table tr:last-child td {
     border: none; }
   .order-table .badge {
@@ -621,9 +621,9 @@ aside.left-panel {
       .navbar .navbar-nav li > a {
         background: none !important;
         color: #607d8b;
+        line-height: 28px;
         display: inline-block;
         font-size: 14px;
-        line-height: 26px;
         padding: 10px 0;
         position: relative;
         width: 100%; }
@@ -632,8 +632,9 @@ aside.left-panel {
         .navbar .navbar-nav li > a .menu-icon {
           color: #607d8b;
           float: left;
-          margin-top: 8px;
+          margin-top: 7px;
           width: 55px;
+          height: 24px;
           text-align: left;
           z-index: 9; }
         .navbar .navbar-nav li > a .menu-title-text {
@@ -881,6 +882,7 @@ aside.left-panel {
   background-color: #fff;
   padding: 0 1.25em 0 0; }
   .right-panel .navbar-header > a {
+    text-align: center;
     display: inline-block; }
 .right-panel .navbar-brand {
   line-height: 42px; }
@@ -1443,7 +1445,9 @@ header .form-inline {
 /* Stats Table */
 .table-stats table {
   font-family: 'Open Sans'; }
-  .table-stats table th,
+  .table-stats table th {
+    font-weight: 600;
+  },
   .table-stats table td {
     border: none;
     border-bottom: 1px solid #e8e9ef;
@@ -1464,7 +1468,7 @@ header .form-inline {
   .table-stats table td {
     color: #343a40;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: capitalize;
     vertical-align: middle; }
 
@@ -2297,6 +2301,7 @@ footer.site-footer {
         font-size: 14px; }
         aside.left-panel.open-menu .navbar .navbar-nav li > a .menu-icon {
           width: 55px;
+          height: 20px;
           font-size: inherit;
           text-align: left; }
       aside.left-panel.open-menu .navbar .navbar-nav li.menu-item-has-children.show .sub-menu {
@@ -2504,3 +2509,29 @@ footer.site-footer {
     right: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+ul.pagination-main {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+}
+ul.pagination-main .pagination-block {
+  overflow: hidden;
+  width: 100%;
+  display: block;
+  padding: 15px 0;
+  margin-top: 15px
+}
+ul.pagination-main .pagination-block .page, ul.pagination-main .pagination-block .prev, ul.pagination-main .pagination-block .next {
+  border: 1px solid #d4d4d4;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+ul.pagination-main .pagination-block .page:hover, ul.pagination-main .pagination-block .prev:hover, ul.pagination-main .pagination-block .next:hover {
+  border: 1px solid #e6e6e6;
+  background: #e6e6e6;
+}

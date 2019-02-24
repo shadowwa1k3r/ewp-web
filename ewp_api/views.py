@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
-from .models import Council, EwpUser, Feedback, Aviarace
+from .models import Council, EwpUser, Feedback, Aviarace, Apartment
 from rest_framework.response import Response
-from .serializers import CouncilSerializer, TokenSerializer, AviaraceListSerializer
+from .serializers import CouncilSerializer, TokenSerializer, AviaraceListSerializer, ApartmentListSerializer
 from django.contrib.auth.models import User
 from rest_framework_jwt.settings import api_settings
 
@@ -91,3 +91,17 @@ class ListAviaraceView(generics.ListAPIView):
         if city:
             qs = qs.filter(city__icontains=city)
         return qs
+
+
+class ListApartmentAPIView(generics.ListAPIView):
+    def get_queryset(self):
+        ned_type = self.request.GET.get("ned_type")  # nedvigimost_type
+
+        qs = Apartment.objects.all()
+
+        if ned_type:
+            qs = qs.filter(nedvigimost_type__icontains=ned_type)
+        return qs
+
+    def get_serializer_class(self):
+        return ApartmentListSerializer

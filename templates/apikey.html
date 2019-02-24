@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Ключи доступа к API</strong>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row form-group">
+                    <div class="col col-md-12">
+                            {% if status %}
+                            <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                                    <span class="badge badge-pill badge-success">Выполнено</span>
+                                    API ключ для обновление базы данных обявлений успешно обновлено
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    </button>
+                                    </div>
+                            {% endif %}
+                        <div class="input-group">
+                            <input type="text" name="api-key" placeholder="Ключ API" value="{{ key }}" class="form-control" style="margin-right:20px; ">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">ОK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -12,82 +12,57 @@
         <div class="card-header">
             <strong class="card-title">Пользователи</strong>
         </div>
-        <div class="table-stats order-table ov-h">
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
             <table class="table">
                 <thead>
                     <tr>
                         <th class="serial">#</th>
-                        <th class="avatar">Avatar</th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Номер телефона</th>
+                        <th>Дата регистрации</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for user in users  %}
                     <tr>
-                        <td class="serial">1.</td>
-                        <td class="avatar">
-                            <div class="round-img">
-                                <a href="#"><img class="rounded-circle" src="{% static 'images/avatar/1.jpg' %}" alt=""></a>
-                            </div>
-                        </td>
-                        <td> #5469 </td>
-                        <td> <span class="name">Louis Stanley</span> </td>
-                        <td> <span class="product">iMax</span> </td>
-                        <td><span class="count">231</span></td>
-                        <td>
-                            <span class="badge badge-complete">Complete</span>
-                        </td>
+                        <td> #{{ user.id }} </td>
+                        <td> <span class="name">{{ user.username }}</span> </td>
+                        <td> <span class="date">{{ user.ewpuser.created }}</span> </td>
                     </tr>
-                    <tr>
-                        <td class="serial">2.</td>
-                        <td class="avatar">
-                            <div class="round-img">
-                                <a href="#"><img class="rounded-circle" src="{% static 'images/avatar/2.jpg' %}" alt=""></a>
-                            </div>
-                        </td>
-                        <td> #5468 </td>
-                        <td> <span class="name">Gregory Dixon</span> </td>
-                        <td> <span class="product">iPad</span> </td>
-                        <td><span class="count">250</span></td>
-                        <td>
-                            <span class="badge badge-complete">Complete</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="serial">3.</td>
-                        <td class="avatar">
-                            <div class="round-img">
-                                <a href="#"><img class="rounded-circle" src="{% static 'images/avatar/3.jpg' %}" alt=""></a>
-                            </div>
-                        </td>
-                        <td> #5467 </td>
-                        <td> <span class="name">Catherine Dixon</span> </td>
-                        <td> <span class="product">SSD</span> </td>
-                        <td><span class="count">250</span></td>
-                        <td>
-                            <span class="badge badge-complete">Complete</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="serial">4.</td>
-                        <td class="avatar">
-                            <div class="round-img">
-                                <a href="#"><img class="rounded-circle" src="{% static 'images/avatar/4.jpg' %}" alt=""></a>
-                            </div>
-                        </td>
-                        <td> #5466 </td>
-                        <td> <span class="name">Mary Silva</span> </td>
-                        <td> <span class="product">Magic Mouse</span> </td>
-                        <td><span class="count">250</span></td>
-                        <td>
-                            <span class="badge badge-pending">Pending</span>
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            <ul class="pagination-main">
+                    {% load i18n %}
+                    <div class="pagination-block">
+                        {% if page_obj.has_previous %}
+                        <a href="?{{ page_obj.previos_page_number.querystring }}" class="prev"><i class="fa fa-angle-double-left"></i></a>
+                        {% else %}
+                        <span class="disabled prev"><i class="fa fa-angle-double-left"></i></span>
+                        {% endif %}
+
+                        {% for page in page_obj.pages %}
+
+                        {% if page %}
+
+                        {% ifequal page page_obj.number %}
+                        <span class="current page">{{ page }}</span>
+                        {% else %}
+                        <a href="?{{ page.querystring }}" class="page">{{ page }}</a>
+                        {% endifequal %}
+
+                        {% else %}
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <a href="?{{ page_obj.next_page_number.querystring }}" class="next"><i class="fa fa-angle-double-right"></i></a>
+                        {% else %}
+                        <span class="disabled next"><i class="fa fa-angle-double-right"></i></span>
+                        {% endif %}
+                    </div>
+                </ul>
         </div>
     </div>
 </div>

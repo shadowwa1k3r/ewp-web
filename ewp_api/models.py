@@ -58,3 +58,40 @@ class Aviarace(models.Model):
 
     def __str__(self):
         return self.city
+
+
+class Img(models.Model):
+    imgurl = models.CharField(max_length=255, default="", blank=True)
+
+
+class Apartment(models.Model):
+    avitoid = models.IntegerField(default=0, blank=True)
+    lat = models.CharField(max_length=255, default="", blank=True)
+    lng = models.CharField(max_length=255, default="", blank=True)
+    city = models.CharField(max_length=255, default="", blank=True)
+    person_type = models.CharField(max_length=255, default="", blank=True)
+    source = models.CharField(max_length=255, default="", blank=True)
+    metro = models.CharField(max_length=255, default="", blank=True)
+    url = models.CharField(max_length=255, default="", blank=True)
+    cat1_id = models.CharField(max_length=255, default="", blank=True)
+    description = models.TextField(default="", blank=True)
+    nedvigimost_type = models.CharField(max_length=255, default="", blank=True)
+    price = models.CharField(max_length=255, default="", blank=True)
+    cat_2 = models.CharField(max_length=255, default="", blank=True)
+    contactname = models.CharField(max_length=255, default="", blank=True)
+    cat_1 = models.CharField(max_length=255, default="", blank=True)
+    apartment_id = models.CharField(max_length=255, default="", blank=True)
+    person = models.CharField(max_length=255, default="", blank=True)
+    address = models.CharField(max_length=255, default="", blank=True)
+    cat2_id = models.CharField(max_length=255, default="", blank=True)
+    time = models.CharField(max_length=255, default="", blank=True)
+    title = models.CharField(max_length=255, default="", blank=True)
+    phone = models.CharField(max_length=255, default="", blank=True)
+    person_type_id = models.CharField(max_length=255, default="", blank=True)
+    nedvigimost_type_id = models.CharField(max_length=255, default="", blank=True)
+    source_id = models.CharField(max_length=255, default="", blank=True)
+    region = models.CharField(max_length=255, default="", blank=True)
+    city_1 = models.CharField(max_length=255, default="", blank=True)
+    phone_operator = models.CharField(max_length=255, default="", blank=True)
+    images = models.ManyToManyField(Img)
+    params = models.TextField()
