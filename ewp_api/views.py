@@ -55,7 +55,7 @@ class LoginView(generics.CreateAPIView):
                 user.ewpuser.confirm_code = gen_code
                 user.ewpuser.save()
                 print('gen for existing user')
-                EwpUser.send_confirm_code(gen_code)
+                EwpUser.send_confirm_code(username, gen_code)
                 return Response(status=status.HTTP_200_OK)
             else:
                 gen_code = EwpUser.generate_confirm_code()
@@ -64,7 +64,7 @@ class LoginView(generics.CreateAPIView):
                 cuser.ewpuser.confirm_code = gen_code
                 cuser.ewpuser.save()
                 print('gen for new user')
-                EwpUser.send_confirm_code(gen_code)
+                EwpUser.send_confirm_code(username, gen_code)
                 return Response(status=status.HTTP_200_OK)
         else:
             if user:

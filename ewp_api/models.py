@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+import requests
 from random import randint
 
 
@@ -27,8 +27,9 @@ class EwpUser(models.Model):
         return str(randint(0, 9))+str(randint(0, 9))+str(randint(0, 9))+str(randint(0, 9))+str(randint(0, 9))
 
     @staticmethod
-    def send_confirm_code(code):
+    def send_confirm_code(phone, code):
         print(code)
+        r = requests.get('https://cdn.osg.uz/sms/?phone={}&id=4342&message={}'.format())
 
 
 @receiver(post_save, sender=User)
@@ -54,6 +55,9 @@ class Aviarace(models.Model):
     city = models.CharField(max_length=255, default='')
     address = models.CharField(max_length=255, default='')
     geolocation = models.CharField(max_length=255, default='')
-    
+
+    class Meta:
+        db_table = 'aviarace'
+
     def __str__(self):
         return self.city
