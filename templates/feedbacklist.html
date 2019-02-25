@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Список предложений</strong>
+        </div>
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th>Отправитель</th>
+                        <th>Заголовок</th>
+                        <th>Дата получения</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedbacks  %}
+                    <tr>
+                        <td> #{{ feedback.id }} </td>
+                        <td> <span >{{ feedback.user.username }}</span> </td>
+                        <td> <span >{{ feedback.title }}</span> </td>
+                        <td> <span >{{ feedback.created }}</span> </td>
+                        {% if feedback.status %}
+                        <td> <span class="badge badge-complete">Прочитано</span> </td>
+                        {% else %}
+                        <td> <span class="badge badge-danger">Не прочитано</span> </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pagination-main">
+                    {% load i18n %}
+                    <div class="pagination-block">
+                        {% if page_obj.has_previous %}
+                        <a href="?{{ page_obj.previos_page_number.querystring }}" class="prev"><i class="fa fa-angle-double-left"></i></a>
+                        {% else %}
+                        <span class="disabled prev"><i class="fa fa-angle-double-left"></i></span>
+                        {% endif %}
+
+                        {% for page in page_obj.pages %}
+
+                        {% if page %}
+
+                        {% ifequal page page_obj.number %}
+                        <span class="current page">{{ page }}</span>
+                        {% else %}
+                        <a href="?{{ page.querystring }}" class="page">{{ page }}</a>
+                        {% endifequal %}
+
+                        {% else %}
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <a href="?{{ page_obj.next_page_number.querystring }}" class="next"><i class="fa fa-angle-double-right"></i></a>
+                        {% else %}
+                        <span class="disabled next"><i class="fa fa-angle-double-right"></i></span>
+                        {% endif %}
+                    </div>
+                </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

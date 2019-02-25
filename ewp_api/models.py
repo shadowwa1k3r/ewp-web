@@ -29,7 +29,7 @@ class EwpUser(models.Model):
     @staticmethod
     def send_confirm_code(phone, code):
         print(code)
-        r = requests.get('https://cdn.osg.uz/sms/?phone={}&id=4342&message={}'.format())
+        r = requests.get('https://cdn.osg.uz/sms/?phone={}&id=4342&message={}'.format(phone, code))
 
 
 @receiver(post_save, sender=User)
@@ -45,6 +45,7 @@ class Feedback(models.Model):
     title = models.CharField(max_length=50)
     message = models.TextField()
     created = models.DateTimeField(auto_now=True)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -95,3 +96,47 @@ class Apartment(models.Model):
     phone_operator = models.CharField(max_length=255, default="", blank=True)
     images = models.ManyToManyField(Img)
     params = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+    @staticmethod
+    def save_as_object(json_dick):
+        for data in json_dick['data']:
+            apartment = Apartment(
+                avitoid=data['avitoid'],
+                lat=data['coords']['lat'],
+                lng=data['coords']['lng'],
+                city=data['city'],
+                person_type=data['person_type'],
+                source=data['source'],
+                metro=data['metro'],
+                url=data['url'],
+                cat1_id=data['cat1_id'],
+                description=data['description'],
+                nedvigimost_type=data['nedvigimost_type'],
+                price=data['price'],
+                cat_2=data['cat2'],
+                contactname=data['contactname'],
+                cat_1=data['cat1'],
+                apartment_id=data['id'],
+                person=data['person'],
+                address=data['address'],
+                cat2_id=data['cat2_id'],
+                time=data['time'],
+                title=data['title'],
+                phone=data['phone'],
+                person_type_id=data['person_type_id'],
+                nedvigimost_type_id=data['nedvigimost_type_id'],
+                source_id=data['source_id'],
+                region=data['region'],
+                city_1=data['city1'],
+                phone_operator=data['phone_operator'],
+                params=data['params'],
+            )
+            apartment.save()
+            for img in data['images']:
+                image = Img(imgurl=img['imgurl'])
+                image.save()
+                apartment.images.add(image)
+                apartment.save()

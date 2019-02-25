@@ -7,16 +7,29 @@ from pure_pagination.mixins import PaginationMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from ewp_api.models import Apartment, Feedback
+import json
+import requests
 
 
 class UserListView(LoginRequiredMixin, PaginationMixin, ListView):
     model = User
     context_object_name = 'users'
-    paginate_by = 15
+    paginate_by = 10
     template_name = 'userlist.html'
 
     def get_queryset(self):
         return User.objects.filter(is_staff=False).order_by('id')
+
+
+class FeedbackListView(LoginRequiredMixin, PaginationMixin, ListView):
+    model = User
+    context_object_name = 'feedbacks'
+    paginate_by = 10
+    template_name = 'feedbacklist.html'
+
+    def get_queryset(self):
+        return Feedback.objects.order_by('-id')
 
 
 class ApiKeyView(LoginRequiredMixin, View):
@@ -32,6 +45,9 @@ class ApiKeyView(LoginRequiredMixin, View):
         ApiKey.objects.all().delete()
         key = ApiKey(key=apikey)
         key.save()
+        response = requests.get('http://ads-api.ru/main/api?user=ergashbek007@mail.ru&token=ded6f8df91fec3a5844f870356aefd12&date1=2018-11-05+17:00:00&category_id=2,3')
+        json_data = json.loads(response.text)
+        Apartment.save_as_object(json_data)
         return render(request, 'apikey.html', {'status': True, 'key': key})
 
 
