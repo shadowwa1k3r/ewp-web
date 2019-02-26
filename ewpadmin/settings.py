@@ -38,7 +38,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'ewp_api',
     'ewp_control_panel',
-    'chat',
+    # 'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
