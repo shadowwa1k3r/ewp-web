@@ -82,7 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ewpadmin.wsgi.application'
-ASGI_APPLICATION = 'ewpadmin.routing.application'
+# ASGI_APPLICATION = 'ewpadmin.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
