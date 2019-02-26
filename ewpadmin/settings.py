@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # 'rest_auth',
     'pure_pagination',
-    'channels',
+    # 'channels',
     'fcm_django'
 ]
 
