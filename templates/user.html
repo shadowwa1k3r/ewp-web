@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong style="font-size: 20" class="card-title">Пользователь</strong>
+        </div>
+        <div class="card-body">
+                <h6 class="fcontent"><b>Номер телефона: </b> {{ user.username }}</h6>
+                <h6 class="fcontent"><b>Предложения по улучщению: </b><a href="{% url 'userfeedback' user.id %}">{{ user.feedback_set.count }}</a></h6>
+                <h6 class="fcontent"><b>Сообщения: </b> {{ user.id }}</h6>
+                <h6 class="fcontent"><b>Дата регистрации: </b> {{ user.ewpuser.created }}</h6>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}

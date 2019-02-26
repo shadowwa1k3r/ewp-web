@@ -12,6 +12,11 @@ import json
 import requests
 
 
+class IndexView(View):
+    def get(self, request):
+        return HttpResponseRedirect(reverse('userlist'))
+
+
 class UserListView(LoginRequiredMixin, PaginationMixin, ListView):
     model = User
     context_object_name = 'users'
@@ -22,14 +27,41 @@ class UserListView(LoginRequiredMixin, PaginationMixin, ListView):
         return User.objects.filter(is_staff=False).order_by('id')
 
 
-class FeedbackListView(LoginRequiredMixin, PaginationMixin, ListView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
+    template_name = 'user.html'
+
+
+class FeedbackListView(LoginRequiredMixin, PaginationMixin, ListView):
+    model = Feedback
     context_object_name = 'feedbacks'
     paginate_by = 10
     template_name = 'feedbacklist.html'
 
     def get_queryset(self):
         return Feedback.objects.order_by('-id')
+
+
+class UserFeedbackList(LoginRequiredMixin, PaginationMixin, ListView):
+    model = Feedback
+    context_object_name = 'feedbacks'
+    paginate_by = 10
+    template_name = 'feedbacklist.html'
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.kwargs['pk'])[0].feedback_set.all()
+
+
+class FeedbackDetailView(LoginRequiredMixin, DetailView):
+    model = Feedback
+    template_name = 'feedback.html'
+
+    def post(self, request, **kwargs):
+        if request.POST.get('status') == 'opened':
+            fb = Feedback.objects.get(id=kwargs['pk'])
+            fb.status = True
+            fb.save()
+        return HttpResponseRedirect(self.request.path_info)
 
 
 class ApiKeyView(LoginRequiredMixin, View):

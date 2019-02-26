@@ -28,7 +28,7 @@
                     <tr>
                         <td> #{{ feedback.id }} </td>
                         <td> <span >{{ feedback.user.username }}</span> </td>
-                        <td> <span >{{ feedback.title }}</span> </td>
+                        <td> <a href="{% url 'feedback' feedback.id %}">{{ feedback.title }}</a> </td>
                         <td> <span >{{ feedback.created }}</span> </td>
                         {% if feedback.status %}
                         <td> <span class="badge badge-complete">Прочитано</span> </td>

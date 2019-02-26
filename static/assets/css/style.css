@@ -365,14 +365,13 @@ p:focus {
 a, button {
   text-decoration: none;
   outline: none !important;
-  color: #878787;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease; }
 
 a:hover,
 a:focus {
   text-decoration: none;
-  color: #000; }
+   }
 
 h1,
 h2,
@@ -2534,4 +2533,7 @@ ul.pagination-main .pagination-block .page, ul.pagination-main .pagination-block
 ul.pagination-main .pagination-block .page:hover, ul.pagination-main .pagination-block .prev:hover, ul.pagination-main .pagination-block .next:hover {
   border: 1px solid #e6e6e6;
   background: #e6e6e6;
+}
+h6.fcontent {
+  margin-bottom: 10px;
 }

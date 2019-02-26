@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <strong style="font-size: 20" class="card-title">{{ feedback.title }}</strong>
+                {% if feedback.status %}
+                <h6 class="btn btn-success" style="position: absolute; right: 0;">Прочитано</h6>
+                {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                        <input type="hidden" value="opened" name="status">
+                        <h6 style="position: absolute; right: 0;">Отметить как <button type="submit" class="btn btn-success" ">Прочитано</button></h6>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+                <h6 class="fcontent" ><b>Отправитель: </b> {{ feedback.user.username }}</h6>
+                <h6 class="fcontent"><b>Имя: </b> {{ feedback.name }}</h6>
+                <h6 class="fcontent"><b>Электронная почта: </b> {{ feedback.email }}</h6>
+                <h6 class="fcontent"><b>Дата отправки: </b> {{ feedback.created }}</h6>
+                <h6 class="fcontent" style="line-height: initial" ><b>Содержание: </b> {{ feedback.message }}</h6>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}
