@@ -10,5 +10,6 @@ urlpatterns = [
     path('feedback/list/<int:pk>', views.FeedbackDetailView.as_view(), name='feedback'),
     path('api-key/', views.ApiKeyView.as_view(), name='apikey'),
     path('login/', views.LoginView.as_view(), name='login'),
-    path('logout/', views.LogoutView.as_view(), name='logout')
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('push-notification/', views.PushNotificationView.as_view(), name='push'),
 ]

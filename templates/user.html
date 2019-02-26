@@ -13,10 +13,29 @@
             <strong style="font-size: 20" class="card-title">Пользователь</strong>
         </div>
         <div class="card-body">
-                <h6 class="fcontent"><b>Номер телефона: </b> {{ user.username }}</h6>
-                <h6 class="fcontent"><b>Предложения по улучщению: </b><a href="{% url 'userfeedback' user.id %}">{{ user.feedback_set.count }}</a></h6>
-                <h6 class="fcontent"><b>Сообщения: </b> {{ user.id }}</h6>
-                <h6 class="fcontent"><b>Дата регистрации: </b> {{ user.ewpuser.created }}</h6>
+                <ul class="nav nav-pills" id="pillst-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="infotab" data-toggle="pill" href="#info" role="tab" aria-controls="info" aria-selected="true">
+                                Сведения
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="chattab" data-toggle="pill" href="#chat" role="tab" aria-controls="chat" aria-selected="false">
+                                Чат
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent" style="margin-top: 15px">
+                        <div class="tab-pane fade active show" id="info" role="tabpanel" aria-labelledby="infotab">
+                                <h6 class="fcontent"><b>Номер телефона: </b> {{ user.username }}</h6>
+                                <h6 class="fcontent"><b>Предложения по улучщению: </b><a href="{% url 'userfeedback' user.id %}">{{ user.feedback_set.count }}</a></h6>
+                                <h6 class="fcontent"><b>Сообщения: </b> {{ user.id }}</h6>
+                                <h6 class="fcontent"><b>Дата регистрации: </b> {{ user.ewpuser.created }}</h6>
+                        </div>
+                            <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chattab">
+                                    <h6>testing</h6>
+                            </div>
+                        </div>
         </div>
     </div>
     </div>

@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'ewp_api',
     'ewp_control_panel',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # 'rest_auth',
     'pure_pagination',
+    'channels',
+    'fcm_django'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ewpadmin.wsgi.application'
-
+ASGI_APPLICATION = 'ewpadmin.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -213,3 +216,7 @@ sentry_sdk.init(
     dsn="https://16f683f40d2247309cb565d0614627e2@sentry.io/1400111",
     integrations=[DjangoIntegration(), sentry_logging]
 )
+
+FCM_DJANGO_SETTINGS = {
+    'FCM_SERVER_KEY': 'AAAAkSCPXL0:APA91bG5JvJ5MFL3lRvxnvAtGrmKPwcHUy3KV0WvLevccr6QzMn5yDOiaYFfxpF40W8iAikgAXSQbQeFZRvDg4uxetpCdX7rqjlcvw9IHCqSzJ_5UoLOvmpfXdgocrw0IW3X9uCPv0te'
+}

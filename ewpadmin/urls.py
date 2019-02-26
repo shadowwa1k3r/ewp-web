@@ -19,5 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('ewp_control_panel.urls')),
     path('admin/', admin.site.urls),
+    path('chat/', include('chat.urls')),
     path('api/v1/', include('ewp_api.urls'))
 ]

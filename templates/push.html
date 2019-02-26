@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Отправка Push увудомления пользователям</strong>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row form-group">
+                    <div class="col col-md-12">
+                            {% if status %}
+                            <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                                    <span class="badge badge-pill badge-success">Выполнено</span>
+                                    Testing!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    </button>
+                                    </div>
+                            {% endif %}
+                        <div class="input-group">
+                            <input type="text" name="title" placeholder="Заголовок" class="form-control" style="margin-right:20px; ">
+                            <input type="text" name="body" placeholder="Сообщения"  class="form-control" style="margin-right:20px; ">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Отправит</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+            <div class="card-header">
+                <strong class="card-title">История Push увудомлений</strong>
+            </div>
+            <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="serial">#</th>
+                            <th>Заголовок</th>
+                            <th>Сообщения</th>
+                            <th>Дата отправки</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for push in pushs  %}
+                        <tr>
+                            <td> #{{ push.id }} </td>
+                            <td> {{ push.title }} </td>
+                            <td> {{ push.body }} </td>
+                            <td> {{ push.created }} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <ul class="pagination-main">
+                        {% load i18n %}
+                        <div class="pagination-block">
+                            {% if page_obj.has_previous %}
+                            <a href="?{{ page_obj.previos_page_number.querystring }}" class="prev"><i class="fa fa-angle-double-left"></i></a>
+                            {% else %}
+                            <span class="disabled prev"><i class="fa fa-angle-double-left"></i></span>
+                            {% endif %}
+    
+                            {% for page in page_obj.pages %}
+    
+                            {% if page %}
+    
+                            {% ifequal page page_obj.number %}
+                            <span class="current page">{{ page }}</span>
+                            {% else %}
+                            <a href="?{{ page.querystring }}" class="page">{{ page }}</a>
+                            {% endifequal %}
+    
+                            {% else %}
+    
+                            {% endif %}
+    
+                            {% endfor %}
+    
+                            {% if page_obj.has_next %}
+                            <a href="?{{ page_obj.next_page_number.querystring }}" class="next"><i class="fa fa-angle-double-right"></i></a>
+                            {% else %}
+                            <span class="disabled next"><i class="fa fa-angle-double-right"></i></span>
+                            {% endif %}
+                        </div>
+                    </ul>
+            </div>
+        </div>
+</div>
+{% endblock content %}
