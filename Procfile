@@ -1,1 +1,1 @@
-worker: python manage.py
+web: (python -m http.server $PORT &) && (python manage.py)
