@@ -17,6 +17,7 @@ django-uuidfield==0.5.0
 djangorestframework==3.9.1
 djangorestframework-jwt==1.11.0
 fcm-django==0.2.21
+firebase-admin==2.16.0
 google-api-core==1.8.0
 google-auth==1.6.3
 google-cloud-core==0.29.1
@@ -34,7 +35,6 @@ protobuf==3.6.1
 psycopg2-binary==2.7.7
 pyasn1==0.4.5
 pyasn1-modules==0.2.4
-pyfcm==1.4.5
 PyHamcrest==1.9.0
 PyJWT==1.7.1
 pytz==2018.9
