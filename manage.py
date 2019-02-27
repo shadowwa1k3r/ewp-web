@@ -2,7 +2,7 @@
 import os
 import sys
 
-prod = False
+prod = True
 if __name__ == '__main__':
     if prod:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ewpadmin.settings')
