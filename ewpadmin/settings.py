@@ -17,6 +17,8 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 from django.urls import reverse_lazy
+import firebase_admin
+from firebase_admin import credentials
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,7 +52,6 @@ INSTALLED_APPS = [
     # 'rest_auth',
     'pure_pagination',
     # 'channels',
-    'fcm_django'
 ]
 
 MIDDLEWARE = [
@@ -217,6 +218,5 @@ sentry_sdk.init(
     integrations=[DjangoIntegration(), sentry_logging]
 )
 
-FCM_DJANGO_SETTINGS = {
-    'FCM_SERVER_KEY': 'AAAAkSCPXL0:APA91bG5JvJ5MFL3lRvxnvAtGrmKPwcHUy3KV0WvLevccr6QzMn5yDOiaYFfxpF40W8iAikgAXSQbQeFZRvDg4uxetpCdX7rqjlcvw9IHCqSzJ_5UoLOvmpfXdgocrw0IW3X9uCPv0te'
-}
+cred = credentials.Certificate('unmigapp-firebase-adminsdk-bol9q-d453dc978d.json')
+deafult_app = firebase_admin.initialize_app(cred)

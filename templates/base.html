@@ -27,17 +27,17 @@
 
 <body>
     <aside id="left-panel" class="left-panel">
-        {% include 'sidebar.html' %}
+        {% include '_sidebar.html' %}
     </aside>
     <div id="right-panel" class="right-panel">
-        {% include 'header.html' %}
+        {% include '_header.html' %}
         <div class="content">
             {% block content %}
             {% endblock content %}
         </div>
         <!-- <div class="clearfix"></div> -->
     </div>
-    {% include 'footer.html' %}
+    {% include '_footer.html' %}
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
     <script src="{% static 'assets/js/popper.min.js' %}"></script>

@@ -31,38 +31,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <ul class="pagination-main">
-                    {% load i18n %}
-                    <div class="pagination-block">
-                        {% if page_obj.has_previous %}
-                        <a href="?{{ page_obj.previos_page_number.querystring }}" class="prev"><i class="fa fa-angle-double-left"></i></a>
-                        {% else %}
-                        <span class="disabled prev"><i class="fa fa-angle-double-left"></i></span>
-                        {% endif %}
-
-                        {% for page in page_obj.pages %}
-
-                        {% if page %}
-
-                        {% ifequal page page_obj.number %}
-                        <span class="current page">{{ page }}</span>
-                        {% else %}
-                        <a href="?{{ page.querystring }}" class="page">{{ page }}</a>
-                        {% endifequal %}
-
-                        {% else %}
-
-                        {% endif %}
-
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
-                        <a href="?{{ page_obj.next_page_number.querystring }}" class="next"><i class="fa fa-angle-double-right"></i></a>
-                        {% else %}
-                        <span class="disabled next"><i class="fa fa-angle-double-right"></i></span>
-                        {% endif %}
-                    </div>
-                </ul>
+            {% include '_pagination.html' %}
         </div>
     </div>
 </div>

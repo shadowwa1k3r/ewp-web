@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.models import User
@@ -10,7 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ewp_api.models import Apartment, Feedback
 import json
 import requests
-from fcm_django.models import FCMDevice
 
 
 class IndexView(View):
@@ -84,7 +83,7 @@ class ApiKeyView(LoginRequiredMixin, View):
         return render(request, 'apikey.html', {'status': True, 'key': key})
 
 
-class PushNotificationView(LoginRequiredMixin, ListView):
+class PushNotificationView(LoginRequiredMixin, PaginationMixin, ListView):
     model = PushNotification
     context_object_name = 'pushs'
     paginate_by = 10
@@ -98,9 +97,8 @@ class PushNotificationView(LoginRequiredMixin, ListView):
         body = request.POST.get('body')
         push = PushNotification(title=title, body=body)
         push.save()
-        devices = FCMDevice.objects.all()
-        devices.send_message(title=title, body=body)
-        return render(request, 'push.html', {'status': True})
+        # return render(request, 'push.html', {'status': True})
+        return redirect(reverse('push'))
 
 
 class LoginView(View):
