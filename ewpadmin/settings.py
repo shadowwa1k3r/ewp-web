@@ -217,6 +217,3 @@ sentry_sdk.init(
     dsn="https://16f683f40d2247309cb565d0614627e2@sentry.io/1400111",
     integrations=[DjangoIntegration(), sentry_logging]
 )
-
-cred = credentials.Certificate('ewp-web-firebase-adminsdk-ft70u-c25b2416e2.json')
-deafult_app = firebase_admin.initialize_app(cred)
