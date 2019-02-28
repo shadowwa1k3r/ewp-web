@@ -6,6 +6,16 @@ import requests
 from random import randint
 
 
+class FcmDevices(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    device_id = models.CharField(max_length=255)
+    device_token = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.device_id
+
+
 class Council(models.Model):
     title = models.CharField(max_length=255, null=False)
 

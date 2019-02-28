@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions, status
-from .models import Council, EwpUser, Feedback, Aviarace, Apartment
+from .models import Council, EwpUser, Feedback, Aviarace, Apartment, FcmDevices
 from rest_framework.response import Response
 from .serializers import CouncilSerializer, TokenSerializer, AviaraceListSerializer, ApartmentListSerializer
 from django.contrib.auth.models import User
@@ -31,6 +31,19 @@ class FeedbackCreateView(generics.CreateAPIView):
         message = request.data.get('message')
         Feedback.objects.create(user=user, name=name, email=email, title=title, message=message)
         return Response(status=status.HTTP_201_CREATED)
+
+
+class FcmGetDeviceToken(generics.CreateAPIView):
+    allowed_methods = ['post']
+    permission_classes = (permissions.IsAuthenticated)
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        device_id = request.data.get('device_id')
+        device_token = request.data.get('device_token')
+        FcmDevices.objects.create(user=user, device_id=device_id, device_token=device_token)
+        return Response(status=status.HTTP_200_OK)
+
 
 
 class LoginView(generics.CreateAPIView):
