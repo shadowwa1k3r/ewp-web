@@ -45,7 +45,6 @@ class FcmGetDeviceToken(generics.CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-
 class LoginView(generics.CreateAPIView):
     """
     POST auth/login/
@@ -94,6 +93,8 @@ class LoginView(generics.CreateAPIView):
 
 
 class ListAviaraceView(generics.ListAPIView):
+    allowed_methods = ['get']
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_serializer_class(self):
         return AviaraceListSerializer
@@ -107,6 +108,9 @@ class ListAviaraceView(generics.ListAPIView):
 
 
 class ListApartmentAPIView(generics.ListAPIView):
+    allowed_methods = ['get']
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get_queryset(self):
         ned_type = self.request.GET.get("ned_type")  # nedvigimost_type
 
@@ -115,6 +119,10 @@ class ListApartmentAPIView(generics.ListAPIView):
         if ned_type:
             qs = qs.filter(nedvigimost_type__icontains=ned_type)
         return qs
+
+    def dispatch(self, request, *args, **kwargs):
+        print(request.META)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_serializer_class(self):
         return ApartmentListSerializer
