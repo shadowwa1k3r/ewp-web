@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ewp_api.models import FcmDevices
 import requests
 import json
 
@@ -21,6 +22,9 @@ class PushNotification(models.Model):
 @receiver(post_save, sender=PushNotification)
 def send_push_notification(instance, created, **kwargs):
     if created:
+        reg_ids = []
+        for device in FcmDevices.objects.all():
+            reg_ids.append(device.device_token)
         payload = {"data": {
             "title": instance.title,
             "body": instance.body,
@@ -34,7 +38,7 @@ def send_push_notification(instance, created, **kwargs):
             "ttl": "86400s",
             "priority": "high"
             },
-            "to": "/topics/ewp"
+            "registration_ids": reg_ids
         }
         headers = {
             'Content-Type': 'application/json',

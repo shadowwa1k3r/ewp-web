@@ -41,7 +41,8 @@ class FcmGetDeviceToken(generics.CreateAPIView):
         user = request.user
         device_id = request.data.get('device_id')
         device_token = request.data.get('device_token')
-        FcmDevices.objects.create(user=user, device_id=device_id, device_token=device_token)
+        fcmdevice = FcmDevices(user=user, device_id=device_id, device_token=device_token)
+        fcmdevice.save()
         return Response(status=status.HTTP_200_OK)
 
 
