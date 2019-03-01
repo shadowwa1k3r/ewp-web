@@ -33,6 +33,7 @@ def send_push_notification(instance, created, **kwargs):
             "notification": {
             "title": instance.title,
             "body": instance.body,
+            "sound": "default",
         },
             "android": {
             "ttl": "86400s",
