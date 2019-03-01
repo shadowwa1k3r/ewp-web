@@ -25,7 +25,7 @@ class FeedbackCreateView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        name = request.data.get('username')
+        name = request.data.get('name')
         email = request.data.get('email')
         title = request.data.get('title')
         message = request.data.get('message')
