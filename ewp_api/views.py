@@ -35,7 +35,7 @@ class FeedbackCreateView(generics.CreateAPIView):
 
 class FcmGetDeviceToken(generics.CreateAPIView):
     allowed_methods = ['post']
-    permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         user = request.user
