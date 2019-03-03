@@ -38,7 +38,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'ewp_api',
     'ewp_control_panel',
-    # 'chat',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # 'rest_auth',
     'pure_pagination',
-    # 'channels',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ewpadmin.wsgi.application'
-# ASGI_APPLICATION = 'ewpadmin.routing.application'
+ASGI_APPLICATION = 'ewpadmin.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
