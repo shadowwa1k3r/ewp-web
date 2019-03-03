@@ -37,6 +37,7 @@ def send_push_notification(instance, created, **kwargs):
         },
             "android": {
             "ttl": "86400s",
+            "sound": "default",
             "priority": "high"
             },
             "registration_ids": reg_ids
