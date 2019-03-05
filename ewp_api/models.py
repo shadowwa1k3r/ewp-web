@@ -48,6 +48,29 @@ def create_ewp_user(instance, created, **kwargs):
         EwpUser.objects.create(user=instance)
 
 
+class ChatRoom(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+@receiver(post_save, sender=EwpUser)
+def create_user_room(instance, created, **kwargs):
+    if created:
+        ChatRoom.objects.create(user=instance.user, name=instance.user.username)
+
+
+class Message(models.Model):
+    body = models.TextField()
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.body
+
+
 class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)

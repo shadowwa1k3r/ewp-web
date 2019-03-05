@@ -29,11 +29,24 @@
                         <div class="tab-pane fade active show" id="info" role="tabpanel" aria-labelledby="infotab">
                                 <h6 class="fcontent"><b>Номер телефона: </b> {{ user.username }}</h6>
                                 <h6 class="fcontent"><b>Предложения по улучщению: </b><a href="{% url 'userfeedback' user.id %}">{{ user.feedback_set.count }}</a></h6>
-                                <h6 class="fcontent"><b>Сообщения: </b> {{ user.id }}</h6>
+                                <h6 class="fcontent"><b>Сообщения: </b> {{ user.message_set.count }}</h6>
                                 <h6 class="fcontent"><b>Дата регистрации: </b> {{ user.ewpuser.created }}</h6>
                         </div>
                             <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chattab">
-                                    <h6>testing</h6>
+                                <div id="chat-container" class="panel-body">
+                                    <ul id="chat-log" class="chat">
+                                    </ul>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="input-group">
+                                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                                Send
+                                                </button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
         </div>
@@ -41,3 +54,105 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    var roomName = {{ user.chatroom_set.all|first }};
+    var chatlist = document.getElementById("chat-log");
+    var chatcontainer = document.getElementById("chat-container");
+    var chatUrl = 'ws://' + window.location.host +
+        '/ws/chat/' + roomName + '/';
+    var chatSocket = new WebSocket(chatUrl);
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        var sender = data['sender'];
+        // document.querySelector('#chat-log').value += (message + '\n');
+        if(sender === 'root'){
+            chatlist.insertAdjacentHTML('beforeend', `<li class="right clearfix">
+                <span class="chat-img pull-right">
+                    <img src="http://placehold.it/50/FA6F57/fff&amp;text=AD" alt="User Avatar" class="img-circle">
+                </span>
+                <div class="chat-body clearfix">
+                    <div class="header">
+                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                        <strong class="pull-right primary-font">${sender}</strong>
+                    </div>
+                    <p>
+                        ${message}
+                    </p>
+                </div>
+            </li>`)
+        }else{
+            chatlist.insertAdjacentElement('beforeend', `<li class="left clearfix">
+                <span class="chat-img pull-left">
+                    <img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle">
+                </span>
+                <div class="chat-body clearfix">
+                    <div class="header">
+                        <strong class="primary-font">${sender}</strong> <small class="pull-right text-muted">
+                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                    </div>
+                    <p>
+                        ${message}
+                    </p>
+                </div>
+            </li>`)
+        }
+        scrollTo(chatcontainer, chatlist.scrollHeight, 600);
+    };
+
+    chatSocket.onerror = function (e) {
+        chatSocket = new WebSocket(chatUrl);
+    }
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#btn-input').focus();
+    document.querySelector('#btn-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#btn-chat').click();
+        }
+    };
+
+    document.querySelector('#btn-chat').onclick = function(e) {
+        var messageInputDom = document.querySelector('#btn-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+
+    function scrollTo(element, to, duration) {
+        var start = element.scrollTop,
+            change = to - start,
+            currentTime = 0,
+            increment = 20;
+
+        var animateScroll = function(){
+            currentTime += increment;
+            var val = Math.easeInOutQuad(currentTime, start, change, duration);
+            element.scrollTop = val;
+            if(currentTime < duration) {
+                setTimeout(animateScroll, increment);
+            }
+        };
+        animateScroll();
+    }
+
+    //t = current time
+    //b = start value
+    //c = change in value
+    //d = duration
+    Math.easeInOutQuad = function (t, b, c, d) {
+        t /= d/2;
+        if (t < 1) return c/2*t*t + b;
+        t--;
+        return -c/2 * (t*(t-2) - 1) + b;
+    };
+</script>
+{% endblock scripts %}
