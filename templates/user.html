@@ -19,7 +19,7 @@
                                 Сведения
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="chattabclick">
                             <a class="nav-link" id="chattab" data-toggle="pill" href="#chat" role="tab" aria-controls="chat" aria-selected="false">
                                 Чат
                             </a>
@@ -35,6 +35,41 @@
                             <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chattab">
                                 <div id="chat-container" class="panel-body">
                                     <ul id="chat-log" class="chat">
+                                        {% with user.chatroom_set.all|first as room %}
+                                        {% for message in room.message_set.all %}
+                                        {% ifnotequal user.username message.sender %}
+                                        <li class="right clearfix">
+                                                <span class="chat-img pull-right">
+                                                    <img src="http://placehold.it/50/FA6F57/fff&amp;text=AD" alt="User Avatar" class="img-circle">
+                                                </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                                        <strong class="pull-right primary-font">{{message.sender}}</strong>
+                                                    </div>
+                                                    <p>
+                                                        {{message.body}}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% else %}
+                                        <li class="left clearfix">
+                                                <span class="chat-img pull-left">
+                                                    <img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle">
+                                                </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <strong class="primary-font">{{message.sender}}</strong> <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                                    </div>
+                                                    <p>
+                                                        {{message.body}}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endifnotequal %}
+                                        {% endfor %}
+                                        {% endwith %}
                                     </ul>
                                 </div>
                                 <div class="panel-footer">
@@ -125,6 +160,7 @@
             'message': message
         }));
         messageInputDom.value = '';
+        scrollTo(chatcontainer, chatlist.scrollHeight, 600);
     };
 
     function scrollTo(element, to, duration) {
@@ -154,5 +190,21 @@
         t--;
         return -c/2 * (t*(t-2) - 1) + b;
     };
+    // document.getElementById("chattabclick").onclick = function () {
+    //     scrollTo(chatcontainer, chatlist.scrollHeight, 600);
+    // }
+    jQuery(document).ready(function($) {
+        $('a[data-toggle="pill"').on('shown.bs.tab', function (e) {
+            if(e.target.id==="chattab"){
+                scrollTo(chatcontainer, chatlist.scrollHeight, 600);
+            }
+    });
+    });
+    // var myTabs = document.getElementById('pillst-tab');
+    // var myTabCollection = myTabs.getElementsByTagName('a');
+    // var myLastTab = myTabCollection[myTabCollection.length-1];
+    // myLastTab.addEventListener('shown.bs.tab', function (event) {
+    //     alert("wtf");
+    // }, false);
 </script>
 {% endblock scripts %}
