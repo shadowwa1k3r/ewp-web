@@ -82,7 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ewpadmin.wsgi.application'
-ASGI_APPLICATION = 'ewpadmin.asgi.application'
+ASGI_APPLICATION = 'ewp_api.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
