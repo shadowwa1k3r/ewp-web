@@ -10,6 +10,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from ewp_api.models import Apartment, Feedback
 import json
 import requests
+from sentry_sdk import capture_message
+from django.http import HttpResponseNotFound
+
+
+def my_custom_page_not_found_view(*args, **kwargs):
+    capture_message("Page not found!", level='error')
+    return HttpResponseNotFound('Not found')
 
 
 class IndexView(View):
