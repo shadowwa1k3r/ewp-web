@@ -6,7 +6,7 @@ import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        print(self.scope['user'].username)
+        print(self.scope['user'])
         if self.scope['user'] != AnonymousUser():
             self.room_name = self.scope['url_route']['kwargs']['room_name']
             self.room_group_name = 'chat_%s' % self.room_name
@@ -17,6 +17,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.accept()
 
     async def disconnect(self, close_code):
+        print(self.scope['user'])
         if self.scope['user'] != AnonymousUser():
             await self.channel_layer.group_discard(
                 self.room_group_name,

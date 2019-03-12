@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+handler404 = 'ewp_control_panel.views.my_custom_page_not_found_view'
+
 urlpatterns = [
     path('', include('ewp_control_panel.urls')),
     path('admin/', admin.site.urls),
