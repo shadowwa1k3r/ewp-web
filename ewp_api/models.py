@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 import requests
 from random import randint
@@ -12,15 +12,11 @@ class FcmDevices(models.Model):
     device_token = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'devices'
+
     def __str__(self):
         return self.device_id
-
-
-class Council(models.Model):
-    title = models.CharField(max_length=255, null=False)
-
-    def __str__(self):
-        return self.title
 
 
 class EwpUser(models.Model):
@@ -28,6 +24,9 @@ class EwpUser(models.Model):
     phone = models.CharField(max_length=20)
     confirm_code = models.CharField(max_length=5)
     created = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'profiles'
 
     def __str__(self):
         return self.user.username
@@ -51,6 +50,10 @@ def create_ewp_user(instance, created, **kwargs):
 class ChatRoom(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.TextField()
+    created = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'rooms'
 
     def __str__(self):
         return self.name
@@ -66,6 +69,10 @@ class Message(models.Model):
     body = models.TextField()
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'messages'
 
     def __str__(self):
         return self.body
@@ -80,6 +87,9 @@ class Feedback(models.Model):
     created = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=False)
 
+    class Meta:
+        db_table = 'feedbacks'
+
     def __str__(self):
         return self.title
 
@@ -90,12 +100,21 @@ class Aviarace(models.Model):
     address = models.CharField(max_length=255, default='')
     geolocation = models.CharField(max_length=255, default='')
 
+    class Meta:
+        db_table = 'aviaraces'
+
     def __str__(self):
         return self.city
 
 
 class Img(models.Model):
     imgurl = models.CharField(max_length=255, default="", blank=True)
+
+    class Meta:
+        db_table = 'images'
+
+    def __str__(self):
+        return self.imgurl
 
 
 class Apartment(models.Model):
@@ -129,6 +148,9 @@ class Apartment(models.Model):
     phone_operator = models.CharField(max_length=255, default="", blank=True)
     images = models.ManyToManyField(Img)
     params = models.TextField()
+
+    class Meta:
+        db_table = 'apartments'
 
     def __str__(self):
         return self.title
@@ -173,3 +195,81 @@ class Apartment(models.Model):
                 image.save()
                 apartment.images.add(image)
                 apartment.save()
+
+
+class AlternativeNumber(models.Model):
+    number = models.CharField(max_length=255, default='')
+
+    class Meta:
+        db_table = 'alternative_numbers'
+
+    def __str__(self):
+        return self.number
+
+
+class WorkDay(models.Model):
+    day = models.CharField(max_length=255, default='')
+    time = models.CharField(max_length=255, default='')
+
+    class Meta:
+        db_table = 'work_days'
+
+    def __str__(self):
+        return self.day
+
+
+class Council(models.Model):
+    country = models.CharField(max_length=255, default='', blank=True)
+    title = models.CharField(max_length=255, default='', blank=True)
+    image_url = models.CharField(max_length=255, default='', blank=True)
+    wikipedia_link = models.CharField(max_length=255, default='', blank=True)
+    address = models.CharField(max_length=255, default='', blank=True)
+    address_geo = models.CharField(max_length=255, default='', blank=True)
+    site = models.CharField(max_length=255, default='', blank=True)
+    email = models.CharField(max_length=255, default='', blank=True)
+    number = models.CharField(max_length=255, default='', blank=True)
+    alternative_numbers = models.ManyToManyField(AlternativeNumber, blank=True, related_name="alter_numbers")
+    work_day = models.ManyToManyField(WorkDay, blank=True, related_name="work_day")
+
+    class Meta:
+        db_table = 'councils'
+        ordering = ['-id', ]
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def phone_numbers(self):
+        """
+        :return: alternative numbers in html format
+        """
+        if self.alternative_numbers.count() > 1:
+            numbers = ''
+            for num in self.alternative_numbers.all():
+                numbers += f"{num.number} <br>"
+            return numbers
+        elif self.alternative_numbers.count() == 1:
+            return self.alternative_numbers.first()
+        else:
+            return ''
+
+    @property
+    def working_days(self):
+        """
+        :return: working days in html format
+        """
+        if self.work_day.count() > 1:
+            days = ''
+            for day in self.work_day.all():
+                days += f"{day.day} <br>"
+            return days
+        elif self.work_day.count() == 1:
+            return self.work_day.first()
+        else:
+            return ''
+
+
+@receiver(pre_delete, sender=Council)
+def delete_numbers_and_days(instance, **kwargs):
+    instance.work_day.all().delete()
+    instance.alternative_numbers.all().delete()

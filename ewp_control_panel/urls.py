@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('push-notification/', views.PushNotificationView.as_view(), name='push'),
+    path('council/list/', views.CouncilListView.as_view(), name='councillist'),
 ]

@@ -7,7 +7,7 @@ from pure_pagination.mixins import PaginationMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ewp_api.models import Apartment, Feedback
+from ewp_api.models import Apartment, Feedback, Council
 import json
 import requests
 
@@ -121,3 +121,16 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('login'))
+
+
+class CouncilListView(ListView):
+    template_name = 'councillist.html'
+    model = Council
+    context_object_name = 'councils'
+
+
+class CouncilCreateView(View):
+    template_name = 'council_create.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})

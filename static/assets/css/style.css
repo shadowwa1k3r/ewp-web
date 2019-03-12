@@ -468,7 +468,7 @@ canvas {
   .order-table tr td:last-child, .order-table tr th:last-child {
      }
   .order-table tr:last-child td {
-    border: none; }
+     }
   .order-table .badge {
     color: white;
     padding: 10px;
@@ -2595,4 +2595,15 @@ h6.fcontent {
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
+}
+.item-actions {
+  width: 100px;
+}
+div.item-actions {
+  margin: 0 auto;
+  width: 50%;
+}
+a.item-actions{
+  font-size: 20px;
+  margin-right: 5px;
 }

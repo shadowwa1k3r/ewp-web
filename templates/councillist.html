@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Посольства и Консульства</strong>
+            <span style="float: right;"><a id="add" href="#" class="btn btn-primary" >Добавить</a></span>
+        </div>
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th>Название</th>
+                        <th>Адрес</th>
+                        <th>Страна</th>
+                        <th>Номер телефона</th>
+                        <th>*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for council in councils  %}
+                    <tr>
+                        <td> #{{ council.id }} </td>
+                        <td> <span class="name"><a href="#">{{ council.title }}</a></span> </td>
+                        <td> <span class="name">{{ council.address }}</span> </td>
+                        <td> <span class="name">{{ council.country }}</span> </td>
+                        <td> <span class="name">{{ council.number }}</span> </td>
+                        <td class="item-actions" >
+                            <div class="item-actions">
+                                <a class="item-actions" id="view" title="Посмотреть" data-council="{{council}}" href="#"><i class="fa fa-eye"></i></a>
+                                <a class="item-actions" id="delete" title="Удалить" data-id="{{council.id}}" class="item-actions-red sweet-success-cancel" href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include '_pagination.html' %}
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="councilView" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Консульство</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+var views = document.querySelectorAll("#view");
+// var councilWindow = new Modal("#councilView");
+for(const view of views){
+    view.addEventListener('click', function (event) {
+        jQuery(document).ready(function($) {
+            $("#councilView").modal();
+        })
+        // councilWindow.show();
+    });
+}
+</script>
+{% endblock scripts %}

@@ -12,11 +12,20 @@ class ApiKey(models.Model):
     def __str__(self):
         return self.key
 
+    class Meta:
+        db_table = 'api_keys'
+
 
 class PushNotification(models.Model):
     title = models.TextField()
     body = models.TextField()
     created = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'notifications'
+
+    def __str__(self):
+        return self.title
 
 
 @receiver(post_save, sender=PushNotification)

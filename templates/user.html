@@ -44,7 +44,7 @@
                                                 </span>
                                                 <div class="chat-body clearfix">
                                                     <div class="header">
-                                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{message.created|date:"[d.M.Y]-[H:i:s]"}}</small>
                                                         <strong class="pull-right primary-font">{{message.sender}}</strong>
                                                     </div>
                                                     <p>
@@ -60,7 +60,7 @@
                                                 <div class="chat-body clearfix">
                                                     <div class="header">
                                                         <strong class="primary-font">{{message.sender}}</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                                        <span class="glyphicon glyphicon-time"></span>{{message.created|date:"[d.M.Y]-[H:i:s]"}}</small>
                                                     </div>
                                                     <p>
                                                         {{message.body}}
@@ -103,15 +103,16 @@
         var data = JSON.parse(e.data);
         var message = data['message'];
         var sender = data['sender'];
+        var created = data['created'];
         // document.querySelector('#chat-log').value += (message + '\n');
-        if(sender === 'root'){
+        if(sender !== {{user.username}}){
             chatlist.insertAdjacentHTML('beforeend', `<li class="right clearfix">
                 <span class="chat-img pull-right">
                     <img src="http://placehold.it/50/FA6F57/fff&amp;text=AD" alt="User Avatar" class="img-circle">
                 </span>
                 <div class="chat-body clearfix">
                     <div class="header">
-                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>${formatDate(created)}</small>
                         <strong class="pull-right primary-font">${sender}</strong>
                     </div>
                     <p>
@@ -127,7 +128,7 @@
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">${sender}</strong> <small class="pull-right text-muted">
-                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                        <span class="glyphicon glyphicon-time"></span>${formatDate(created)}</small>
                     </div>
                     <p>
                         ${message}
@@ -155,12 +156,16 @@
 
     document.querySelector('#btn-chat').onclick = function(e) {
         var messageInputDom = document.querySelector('#btn-input');
-        var message = messageInputDom.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-        messageInputDom.value = '';
-        scrollTo(chatcontainer, chatlist.scrollHeight, 600);
+        if(messageInputDom.value!==""){
+            var message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+            scrollTo(chatcontainer, chatlist.scrollHeight, 600);
+        } else {
+            alertify.alert("Пустое сообщения!");
+        }
     };
 
     function scrollTo(element, to, duration) {
@@ -206,5 +211,12 @@
     // myLastTab.addEventListener('shown.bs.tab', function (event) {
     //     alert("wtf");
     // }, false);
+
+    function formatDate(dt) {
+        var date = new Date(dt);
+        var locale = "ru-RU";
+        var mon = date.toLocaleString(locale, {month: "short"}).substring(0,3);
+        return "["+('0'+date.getDate()).slice(-2)+"."+mon.charAt(0).toUpperCase()+mon.slice(1)+"."+date.getFullYear()+"]-["+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":"+('0'+date.getSeconds()).slice(-2)+"]";
+    }
 </script>
 {% endblock scripts %}
