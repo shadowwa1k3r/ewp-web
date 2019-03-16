@@ -37,7 +37,7 @@
                                     <ul id="chat-log" class="chat">
                                         {% with user.chatroom_set.all|first as room %}
                                         {% for message in room.message_set.all %}
-                                        {% if user.username != message.sender %}
+                                        {% if user.username != message.sender.username %}
                                         <li class="right clearfix">
                                                 <span class="chat-img pull-right">
                                                     <img src="http://placehold.it/50/FA6F57/fff&amp;text=AD" alt="User Avatar" class="img-circle">
@@ -45,7 +45,7 @@
                                                 <div class="chat-body clearfix">
                                                     <div class="header">
                                                         <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{message.created|date:"[d.M.Y]-[H:i:s]"}}</small>
-                                                        <strong class="pull-right primary-font">'{{message.sender}}'{{user.username}}'</strong>
+                                                        <strong class="pull-right primary-font">{{message.sender}}</strong>
                                                     </div>
                                                     <p>
                                                         {{message.body}}
