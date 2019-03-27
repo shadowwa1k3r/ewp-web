@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.models import User
@@ -11,12 +11,14 @@ from ewp_api.models import Apartment, Feedback, Council
 import json
 import requests
 from sentry_sdk import capture_message
-from django.http import HttpResponseNotFound
+from django.template import RequestContext
 
 
-def my_custom_page_not_found_view(*args, **kwargs):
+def my_custom_page_not_found_view(request, *args, **kwargs):
     capture_message("Page not found!", level='debug')
-    return HttpResponseNotFound('Not found')
+    response = render_to_response('404.html', {}, context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 
 class IndexView(View):
