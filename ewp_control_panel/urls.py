@@ -13,4 +13,9 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('push-notification/', views.PushNotificationView.as_view(), name='push'),
     path('council/list/', views.CouncilListView.as_view(), name='councillist'),
+    path('council/list/<int:pk>', views.CouncilCreateView.as_view(), name='council'),
+    path('streamaudio/group/list/<int:pk>/list/', views.AudioStreamListView.as_view(), name='audiolist'),
+    path('streamaudio/group/list/', views.AudioStreamGroupListView.as_view(), name='audiogrouplist'),
+    path('streamaudio/open/', views.StreamOpenView.as_view(), name='streamopen'),
+    path('book/list/', views.BookListView.as_view(), name='booklist'),
 ]

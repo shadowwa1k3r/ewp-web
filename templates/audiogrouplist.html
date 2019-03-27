@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Категория аудиофайлов</strong>
+        </div>
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th>Названия категории</th>
+                        <th>Количество аудиофайлов</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories  %}
+                    <tr>
+                        <td> #{{ category.id }} </td>
+                        <td> <span class="name"><a href="{% url 'audiolist' category.id %}">{{ category.title }}</a></span> </td>
+                        <td> <span class="date">{{ category.audio_count }}</span> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include '_pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

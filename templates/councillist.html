@@ -29,7 +29,7 @@
                     {% for council in councils  %}
                     <tr>
                         <td> #{{ council.id }} </td>
-                        <td> <span class="name"><a href="#">{{ council.title }}</a></span> </td>
+                        <td> <span class="name"><a href="{% url 'council' council.id %}">{{ council.title }}</a></span> </td>
                         <td> <span class="name">{{ council.address }}</span> </td>
                         <td> <span class="name">{{ council.country }}</span> </td>
                         <td> <span class="name">{{ council.number }}</span> </td>

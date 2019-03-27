@@ -100,8 +100,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         # local
          'NAME': 'ewp',
-         'USER': 'ewpuser',
-         'PASSWORD': 'nighthawk'
+         'USER': 'djangouser',
+         'PASSWORD': '12345'
         # heroku
         # 'NAME': 'd5g123t3inot9u',
         # 'USER': 'ktcafzgvklhwwt',
@@ -224,3 +224,6 @@ sentry_sdk.init(
     dsn="https://16f683f40d2247309cb565d0614627e2@sentry.io/1400111",
     integrations=[DjangoIntegration(), sentry_logging]
 )
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
+DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400

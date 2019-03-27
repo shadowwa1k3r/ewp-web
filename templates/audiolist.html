@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Аудиофайлы</strong>
+            <form action="{% url 'streamopen' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="play" value="True">
+                <input type="hidden" name="c_id" value="{{c_id}}">
+                <button class="btn btn-primary">Старт/Стоп</button>
+            </form>
+        </div>
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th>Названия</th>
+                        <th>Длительность</th>
+                        <th>Размер</th>
+                        <th>*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audio in audios  %}
+                    <tr>
+                        <td> #{{ audio.id }} </td>
+                        <td> <span class="name"><a href="#">{{ audio.title }}</a></span> </td>
+                        <td> <span class="date">{{ audio.duration }}</span> </td>
+                        <td> <span class="date">{{ audio.audiofile.size|filesizeformat }}</span> </td>
+                        <td class="item-actions" >
+                            <div class="item-actions">
+                                <a class="item-actions" id="view" title="Посмотреть" href="#"><i class="fa fa-eye"></i></a>
+                                <a class="item-actions" id="delete" title="Удалить"  class="item-actions-red sweet-success-cancel" href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include '_pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

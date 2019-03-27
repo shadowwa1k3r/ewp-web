@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Книги</strong>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <span style="float: right;"><a id="add" href="#" class="btn btn-primary" >Добавить</a></span>
+            </form>
+        </div>
+        <div class="table-stats table-hover table-bordered table-striped order-table ov-h">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th>Названия</th>
+                        <th>Размер</th>
+                        <th>*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books  %}
+                    <tr>
+                        <td> #{{ book.id }} </td>
+                        <td> <span class="name"><a href="#">{{ book.title }}</a></span> </td>
+                        <td> <span class="date">{{ book.bookfile.size|filesizeformat }}</span> </td>
+                        <td class="item-actions" >
+                            <div class="item-actions">
+                                <a class="item-actions" id="view" title="Посмотреть" href="#"><i class="fa fa-eye"></i></a>
+                                <a class="item-actions" id="delete" title="Удалить"  class="item-actions-red sweet-success-cancel" href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include '_pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

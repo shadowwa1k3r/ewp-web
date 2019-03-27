@@ -1,3 +1,6 @@
 from django.contrib import admin
+from ewp_control_panel.models import StreamAudio, StreamAudioCategory, Book
 
-# Register your models here.
+admin.site.register(StreamAudio)
+admin.site.register(StreamAudioCategory)
+admin.site.register(Book)

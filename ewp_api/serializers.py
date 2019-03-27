@@ -1,11 +1,30 @@
 from rest_framework.serializers import ModelSerializer, Serializer, CharField
 from .models import Council, Aviarace, Img, Apartment
+from ewp_control_panel.models import Book, StreamAudioCategory
 
 
 class CouncilSerializer(ModelSerializer):
     class Meta:
         model = Council
-        fields = ("title",)
+
+
+class StreamListSerializer(ModelSerializer):
+    class Meta:
+        model = StreamAudioCategory
+        fields = [
+            'title'
+        ]
+
+
+class BookListSerializer(ModelSerializer):
+    class Meta:
+        model = Book
+        fields = [
+            'bookfile',
+            'title',
+            'created',
+            'cover',
+        ]
 
 
 class TokenSerializer(Serializer):

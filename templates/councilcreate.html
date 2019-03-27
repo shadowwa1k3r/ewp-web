@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <div class="form-group row">
+            <label for="council_name" class="col-2 col-form-label">Country</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_country">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_name" class="col-2 col-form-label">Title</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_image" class="col-2 col-form-label">Image</label>
+            <div class="col-10">
+                <input class="form-control" type="file" id="council_image">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_wikipedia_link" class="col-2 col-form-label">Wikipedia link</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_wikipedia_link">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_website" class="col-2 col-form-label">Website</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_website">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_email" class="col-2 col-form-label">Email</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_number" class="col-2 col-form-label">Number</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_number">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="council_working_days" class="col-2 col-form-label">Working days</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="council_working_days">
+            </div>
+        </div>
+        <div class="form-group row">
+                <label for="council_name" class="col-2 col-form-label">Address</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="council_address">
+                </div>
+        </div>
+        <div class="form-group row">
+                <label for="council_name" class="col-2 col-form-label">AddressGeo</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="council_address_geo">
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.models import User
-from ewp_control_panel.models import ApiKey, PushNotification
+from ewp_control_panel.models import ApiKey, PushNotification, StreamAudio, StreamAudioCategory, Book
 from pure_pagination.mixins import PaginationMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
@@ -133,11 +133,54 @@ class LogoutView(View):
 class CouncilListView(ListView):
     template_name = 'councillist.html'
     model = Council
+    paginate_by = 10
     context_object_name = 'councils'
 
 
-class CouncilCreateView(View):
-    template_name = 'council_create.html'
+class CouncilCreateView(DetailView):
+    model = Council
+    template_name = 'councilcreate.html'
 
-    def get(self, request):
+    def post(self, request):
         return render(request, self.template_name, {})
+
+
+class StreamOpenView(View):
+    def post(self, request):
+        if request.POST.get('play'):
+            cat = StreamAudioCategory.objects.filter(id=request.POST.get('c_id'))[0]
+            if cat.status:
+                cat.status = False
+            else:
+                cat.status = True
+            cat.save()
+        return HttpResponseRedirect(reverse('audiolist', kwargs={'pk': request.POST.get('c_id')}))
+
+
+class AudioStreamListView(ListView):
+    model = StreamAudio
+    context_object_name = 'audios'
+    paginate_by = 10
+    template_name = 'audiolist.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AudioStreamListView, self).get_context_data(**kwargs)
+        context['c_id'] = self.kwargs['pk']
+        return context
+
+    def get_queryset(self):
+        return StreamAudioCategory.objects.filter(id=self.kwargs['pk'])[0].streamaudio_set.all()
+
+
+class AudioStreamGroupListView(ListView):
+    model = StreamAudioCategory
+    context_object_name = 'categories'
+    paginate_by = 10
+    template_name = 'audiogrouplist.html'
+
+
+class BookListView(ListView):
+    model = Book
+    context_object_name = 'books'
+    paginate_by = 10
+    template_name = 'booklist.html'

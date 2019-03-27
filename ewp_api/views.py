@@ -1,7 +1,8 @@
 from rest_framework import generics, permissions, status
 from .models import Council, EwpUser, Feedback, Aviarace, Apartment, FcmDevices
+from ewp_control_panel.models import Book, StreamAudioCategory
 from rest_framework.response import Response
-from .serializers import CouncilSerializer, TokenSerializer, AviaraceListSerializer, ApartmentListSerializer
+from .serializers import CouncilSerializer, TokenSerializer, AviaraceListSerializer, ApartmentListSerializer, BookListSerializer, StreamListSerializer
 from django.contrib.auth.models import User
 from rest_framework_jwt.settings import api_settings
 
@@ -16,6 +17,20 @@ class ListCouncilView(generics.ListAPIView):
     allowed_methods = ['get']
     queryset = Council.objects.all()
     serializer_class = CouncilSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class ListStreamView(generics.ListAPIView):
+    allowed_methods = ['get']
+    queryset = StreamAudioCategory.objects.all()
+    serializer_class = StreamListSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class ListBookView(generics.ListAPIView):
+    allowed_methods = ['get']
+    queryset = Book.objects.all()
+    serializer_class = BookListSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 
