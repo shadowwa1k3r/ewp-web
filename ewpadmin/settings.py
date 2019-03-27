@@ -99,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         # local
-         'NAME': 'ewp',
-         'USER': 'djangouser',
-         'PASSWORD': '12345'
+        'NAME': 'ewp',
+        'USER': 'djangouser',
+        'PASSWORD': '12345'
         # heroku
         # 'NAME': 'd5g123t3inot9u',
         # 'USER': 'ktcafzgvklhwwt',
@@ -109,11 +109,11 @@ DATABASES = {
         # 'HOST': 'ec2-46-137-121-216.eu-west-1.compute.amazonaws.com',
         # 'PORT': '5432'
         # clever
-        #'NAME': 'blywn83xrhzkq2giprct',
-        #'USER': 'uthgrnl73fbqnxapaumt',
-        #'PASSWORD': 'F4jmGxPBCeLafOeHnoLR',
-        #'HOST': 'blywn83xrhzkq2giprct-postgresql.services.clever-cloud.com',
-        #'PORT': '5432'
+        # 'NAME': 'blywn83xrhzkq2giprct',
+        # 'USER': 'uthgrnl73fbqnxapaumt',
+        # 'PASSWORD': 'F4jmGxPBCeLafOeHnoLR',
+        # 'HOST': 'blywn83xrhzkq2giprct-postgresql.services.clever-cloud.com',
+        # 'PORT': '5432'
     }
 }
 
