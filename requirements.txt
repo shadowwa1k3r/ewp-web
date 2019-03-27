@@ -23,6 +23,7 @@ hyperlink==18.0.0
 idna==2.8
 incremental==17.5.0
 msgpack==0.6.1
+pdf2image==1.5.1
 Pillow==5.4.1
 protobuf==3.6.1
 psycopg2-binary==2.7.7
@@ -30,12 +31,14 @@ pyasn1==0.4.5
 pyasn1-modules==0.2.4
 PyHamcrest==1.9.0
 PyJWT==1.7.1
+pylibshout2==0.0.1
 pytz==2018.9
 requests==2.21.0
 requests-toolbelt==0.9.1
 rsa==4.0
 sentry-sdk==0.7.3
 six==1.12.0
+tinytag==1.0.0
 Twisted==18.9.0
 txaio==18.8.1
 urllib3==1.24.1
