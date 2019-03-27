@@ -15,7 +15,7 @@ from django.http import HttpResponseNotFound
 
 
 def my_custom_page_not_found_view(*args, **kwargs):
-    capture_message("Page not found!", level='error')
+    capture_message("Page not found!", level='debug')
     return HttpResponseNotFound('Not found')
 
 

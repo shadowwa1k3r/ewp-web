@@ -100,8 +100,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         # local
         'NAME': 'ewp',
-        'USER': 'djangouser',
-        'PASSWORD': '12345'
+        'USER': 'ewpuser',
+        'PASSWORD': 'nighthawk'
         # heroku
         # 'NAME': 'd5g123t3inot9u',
         # 'USER': 'ktcafzgvklhwwt',
