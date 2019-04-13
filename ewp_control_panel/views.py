@@ -11,12 +11,11 @@ from ewp_api.models import Apartment, Feedback, Council
 import json
 import requests
 from sentry_sdk import capture_message
-from django.http import HttpResponseNotFound
 
 
-def my_custom_page_not_found_view(*args, **kwargs):
+def my_custom_page_not_found_view(request):
     capture_message("Page not found!", level='error')
-    return HttpResponseNotFound('Not found')
+    return render(request, '404.html', {})
 
 
 class IndexView(View):
