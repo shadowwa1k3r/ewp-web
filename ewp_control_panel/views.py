@@ -15,7 +15,7 @@ from sentry_sdk import capture_message
 
 def my_custom_page_not_found_view(request):
     capture_message("Page not found!", level='error')
-    return render(request, '404.html', {})
+    return render(request, '404.html', status=404)
 
 
 class IndexView(View):
