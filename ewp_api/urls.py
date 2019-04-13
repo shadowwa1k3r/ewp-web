@@ -8,4 +8,5 @@ urlpatterns = [
     path('aviarace/list/', views.ListAviaraceView.as_view(), name='aviarace-all'),
     path('feedback/create/', views.FeedbackCreateView.as_view(), name='feedback-create'),
     path('fcmdevice/create/', views.FcmGetDeviceToken.as_view(), name='fcmid-create'),
+    path('stream/list/', views.ListStreamView.as_view(), name='stream-list'),
 ]
