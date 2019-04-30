@@ -84,7 +84,7 @@ class ApiKeyView(LoginRequiredMixin, View):
         ApiKey.objects.all().delete()
         key = ApiKey(key=apikey, mail=apimail)
         key.save()
-        response = requests.get('http://ads-api.ru/main/api?user='+key.mail+'&token='+key.key+'&date1=2019-01-01+17:00:00&category_id=2,3')
+        response = requests.get('http://ads-api.ru/main/api?user='+key.mail+'&token='+str(key.key)+'&date1=2019-01-01+17:00:00&category_id=2,3')
         json_data = json.loads(response.text)
         Apartment.save_as_object(json_data)
         return render(request, 'apikey.html', {'status': True, 'key': key, 'mail': key.mail})
