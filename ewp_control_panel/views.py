@@ -76,17 +76,18 @@ class ApiKeyView(LoginRequiredMixin, View):
             key = ApiKey.objects.all()[0]
         except IndexError:
             key = ''
-        return render(request, 'apikey.html', {'key': key})
+        return render(request, 'apikey.html', {'key': key, 'mail': key.mail})
 
     def post(self, request):
         apikey = request.POST.get('api-key')
+        apimail = request.POST.get('api-mail')
         ApiKey.objects.all().delete()
-        key = ApiKey(key=apikey)
+        key = ApiKey(key=apikey, mail=apimail)
         key.save()
-        response = requests.get('http://ads-api.ru/main/api?user=ergashbek007@mail.ru&token=ded6f8df91fec3a5844f870356aefd12&date1=2018-11-05+17:00:00&category_id=2,3')
+        response = requests.get('http://ads-api.ru/main/api?user='+key.mail+'&token='+key.key+'&date1=2019-01-01+17:00:00&category_id=2,3')
         json_data = json.loads(response.text)
         Apartment.save_as_object(json_data)
-        return render(request, 'apikey.html', {'status': True, 'key': key})
+        return render(request, 'apikey.html', {'status': True, 'key': key, 'mail': key.mail})
 
 
 class PushNotificationView(LoginRequiredMixin, PaginationMixin, ListView):
