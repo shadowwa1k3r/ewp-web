@@ -15,7 +15,7 @@ from django.core.files.base import ContentFile
 
 class ApiKey(models.Model):
     key = models.TextField()
-    mail = models.TextField()
+    mail = models.TextField(default='')
 
     def __str__(self):
         return self.key
