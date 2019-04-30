@@ -6,9 +6,7 @@ from ewp_control_panel.models import Book, StreamAudioCategory
 class CouncilSerializer(ModelSerializer):
     class Meta:
         model = Council
-        fields = [
-            '__all__'
-        ]
+        fields = '__all__'
 
 
 class StreamListSerializer(ModelSerializer):
