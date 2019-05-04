@@ -1,12 +1,43 @@
 from rest_framework.serializers import ModelSerializer, Serializer, CharField
-from .models import Council, Aviarace, Img, Apartment
+from .models import Council, Aviarace, Img, Apartment, AlternativeNumber, WorkDay
 from ewp_control_panel.models import Book, StreamAudioCategory
 
 
+class WorkDaySerializer(ModelSerializer):
+    class Meta:
+        model = WorkDay
+        fields = [
+            'day',
+            'time'
+        ]
+
+
+class AlternativeNumberSerializer(ModelSerializer):
+    class Meta:
+        model = AlternativeNumber
+        fields = [
+            'number'
+        ]
+
+
 class CouncilSerializer(ModelSerializer):
+    alternative_numbers = AlternativeNumberSerializer(many=True)
+    work_days = WorkDaySerializer(many=True)
+
     class Meta:
         model = Council
-        fields = '__all__'
+        fields = [
+            'country',
+            'title',
+            'image_url',
+            'wikipedia_link',
+            'address',
+            'address_geo',
+            'site',
+            'email',
+            'number',
+            ''
+        ]
 
 
 class StreamListSerializer(ModelSerializer):
