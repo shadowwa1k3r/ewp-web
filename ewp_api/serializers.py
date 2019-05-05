@@ -22,7 +22,7 @@ class AlternativeNumberSerializer(ModelSerializer):
 
 class CouncilSerializer(ModelSerializer):
     alternative_numbers = AlternativeNumberSerializer(many=True)
-    work_days = WorkDaySerializer(many=True)
+    work_day = WorkDaySerializer(many=True)
 
     class Meta:
         model = Council
