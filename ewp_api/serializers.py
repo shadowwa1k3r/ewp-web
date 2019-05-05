@@ -36,7 +36,8 @@ class CouncilSerializer(ModelSerializer):
             'site',
             'email',
             'number',
-            ''
+            'alternative_numbers',
+            'work_days'
         ]
 
 
